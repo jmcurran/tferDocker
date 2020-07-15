@@ -1,0 +1,326 @@
+body {
+    width: 900px;
+    margin: auto;
+    overflow: visible;
+    background-color: rgb(245, 245, 245);
+}
+
+#parameters-form {
+    margin: 25px 0;
+    position: relative;
+}
+
+#parameters-form > div {
+    position: relative;
+    vertical-align: top;
+    display: inline-block;
+    margin-bottom: 0;
+    margin-top: 7px;
+    width: 140px;
+}
+
+#parameters-form .form-group {
+    margin-bottom: 0;
+}
+
+#parameters-form select option {
+    padding: 0;
+}
+
+/* Fixed width inputs for a tidier look */
+#parameters-form input,
+#parameters-form select {
+    width: 115px;
+    height: auto;
+    padding: 5px;
+    margin: 0;
+    font-size: 13px;
+}
+
+/* Hide labels initially. Use JS to create formatted
+** labels and then set opacity to 1.
+*/
+#parameters-form label {
+    font-weight: bold;
+    opacity: 0;
+    font-size: 13px;
+    margin-bottom: 0;
+    margin-left: 2em;
+}
+
+#parameters-form input:invalid {
+    border: 1px solid rgb(229, 84, 84);
+    background-color: rgb(255, 244, 244);
+}
+
+/* Number inputs - hide arrows where possible */
+#parameters-form input[type="number"]::-webkit-outer-spin-button,
+#parameters-form input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+#parameters-form input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+#parameters-form #button-div {
+    vertical-align: bottom;
+}
+
+/* Help icons */
+span.help {
+    position: absolute;
+    display: inline-block;
+    height: 1.5em;
+    width: 1.5em;
+    margin-right: 0.5em;
+    background-color: rgb(190, 190, 190);
+    color: #FFF;
+    border: 0;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Tooltip that pops up when hovering over a help icon */
+#help-tooltip {
+    position: absolute;
+    display: none;
+    opacity: 0;
+    cursor: default;
+    max-width: 270px;
+    padding: 10px;
+    background-color: rgb(110, 110, 110);
+    color: white;
+    font-size: 0.9em;
+}
+
+
+/* Simulate button */
+#button-div button {
+    color: #FFF;
+    background-color: #006dcc;
+    border-color: #04c;
+}
+#button-div button:hover,
+#button-div button:active,
+#button-div button:focus {
+    background-color: #04c;
+}
+#button-div button:disabled {
+    opacity: 0.4;
+}
+
+/* Chart container element */
+#chart {
+    min-height: 400px;
+    position: relative;
+    background-color: #FFF;
+    margin-bottom: 1em;
+}
+
+/* Chart screen element to cover chart when new data
+** is being fetched
+*/
+.chart-screen {
+    display: none;
+}
+
+.chart-screen.active {
+    display: block;
+    width: 860px;
+    height: 400px;
+    background-color: rgba(255, 255, 255, 0.6);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    text-align: center;
+    line-height: 350px;
+    font-size: 18px;
+    color: #505050;
+}
+
+.chart-screen div {
+    background-image: url(spinner.gif);
+    background-repeat: no-repeat;
+    background-position: 0 center;
+    display: inline-block;
+    padding-left: 40px;
+    height: 2em;
+    line-height: 2em;
+    margin-top: 140px;
+}
+
+/* Chart tooltip element */
+.chart-tooltip {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: rgba(220, 220, 220, 0.8);
+    color: #333;
+    padding: 10px;
+}
+
+.chart-tooltip .bar-x,
+.chart-tooltip .bar-y {
+    font-weight: bold;
+    font-size: 1.25em;
+}
+
+
+/* --------------- Chart SVG styles --------------- */
+
+#chart .axis text {
+    font-size: 12px;
+}
+
+#chart .axis path,
+#chart .axis line {
+    fill: none;
+    stroke: #D3D3D3;
+    shape-rendering: crispEdges;
+}
+
+#chart .bars rect {
+    fill: rgb(255, 120, 120);
+    fill-opacity: 0.8;
+    stroke: #F26464;
+    stroke-width: 1px;
+}
+
+#chart path.axis-dark {
+    fill: none;
+    stroke: #777;
+    shape-rendering: crispEdges;
+}
+
+#chart line.cursor {
+    shape-rendering: crispEdges;
+    stroke: #888;
+    stroke-width: 1px;
+}
+
+#chart .brush .extent {
+    fill: rgb(140, 140, 255);
+    fill-opacity: 0.2;
+    stroke-width: 0;
+    shape-rendering: crispEdges;
+}
+
+#chart .bars rect.selected {
+    fill: blue;
+    stroke: blue;
+}
+
+/* Option to enable range selection */
+#select-enabled-container {
+    position: absolute;
+    left: 60px;
+    top: 10px;
+}
+#select-enabled {
+    margin-right: 5px;
+}
+#select-enabled-container label {
+    font-weight: normal;
+}
+#selection-label {
+    font-family: Courier, monospace;
+    font-size: 1.2em;
+}
+
+/* ------------------------------------------------------ */
+
+
+/* Popup buttons container */
+div#popups {
+    float: right;
+}
+#popups button {
+    margin-left: 1em;
+}
+
+
+/* We want our diagram modal popup to be as wide
+** as the SVG element, so override bootstrap width
+** style and fix the width.
+*/
+.modal-lg {
+    width: 900px !important;
+}
+
+/* Make modal popup titles more prominent */
+.modal h4 {
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+
+/* --------------- SVG Model Diagram styles --------------- */
+
+#model .grid line {
+    stroke: #EEE;
+    stroke-width: 1px;
+    shape-rendering: crispEdges;
+}
+#model rect {
+    shape-rendering: crispEdges;
+}
+#model circle,
+#model rect {
+    fill: none;
+    stroke: #444;
+    stroke-width: 1px;
+}
+
+#model circle.node,
+#model rect.node {
+    fill: #F3F3F3;
+    stroke: #888;
+}
+
+#model .node.active {
+    fill: rgb(255, 255, 200);
+}
+
+#model .link {
+    stroke: #222;
+}
+
+#model #arrow path {
+    fill: #222;
+}
+
+#model text.node-label {
+    font-family: Courier, monospace;
+}
+
+#model tspan.subscript,
+#model tspan.superscript {
+    font-size: 0.7em;
+}
+
+#model g.interactive-node text,
+#model .tooltip {
+    pointer-events: none;
+}
+
+#model {
+    position: relative;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+#model .tooltip {
+    position: absolute;
+    opacity: 0;
+    font-size: 12px;
+    color: #333;
+    background-color: rgba(255, 250, 250, 0.9);
+    border: 1px solid rgb(255, 100, 100);
+    padding: 0.5em;
+    max-width: 300px;
+}
+
+/* ------------------------------------------------------- */
